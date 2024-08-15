@@ -68,5 +68,27 @@ namespace Muscle_Backend.Controllers
                 }
             }
         }
+
+        /// <summary>
+        /// 部位マスタを削除
+        /// </summary>
+        [HttpPost("DeleteBodyParts", Name = "DeleteBodyParts")]
+        public void DeleteBodyParts()
+        {
+            using (var db = new SystemContext())
+            {
+                // 更新するデータを取得
+                var bodyPart = db.BodyParts.Where(x => x.BodyPartId == 2 && x.IsDeleted == false).FirstOrDefault();
+
+                if (bodyPart != null)
+                {
+                    // 部位を取得できた場合
+                    bodyPart.IsDeleted = true;
+
+                    // 変更を保存
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }
