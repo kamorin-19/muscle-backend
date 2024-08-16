@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Muscle_Backend.Database;
+using Muscle_Backend.Features;
+using Muscle_Backend.Interfaces;
 using Muscle_Backend.Models;
 
 namespace Muscle_Backend.Controllers
@@ -18,7 +20,10 @@ namespace Muscle_Backend.Controllers
         public MuscleManagementController(ILogger<MuscleManagementController> logger)
         {
             _logger = logger;
+            _bodyPartFeature = new BodyPartFeature();
         }
+
+        private readonly BaseInterface<BodyPart> _bodyPartFeature;
 
         /// <summary>
         /// 部位マスタを読み込み
@@ -26,12 +31,7 @@ namespace Muscle_Backend.Controllers
         [HttpGet("GetBodyParts",Name = "GetBodyParts")]
         public IEnumerable<BodyPart> GetBodyParts()
         {
-            using (var db = new SystemContext())
-            {
-                return db.BodyParts.Where(x => x.IsDeleted == false)
-                                   .OrderBy(y => y.BodyPartId)
-                                   .ToList();
-            }
+            return _bodyPartFeature.SelectRecords(new BodyPart());
         }
 
         /// <summary>
@@ -40,11 +40,7 @@ namespace Muscle_Backend.Controllers
         [HttpPost("AddBodyParts", Name = "AddBodyParts")]
         public void AddBodyParts()
         {
-            using (var db = new SystemContext())
-            {
-                db.Add(new BodyPart { BodyPartId = 2, Name = "肩" });
-                db.SaveChanges();
-            }
+            _bodyPartFeature.InsertRecord(new BodyPart());
         }
 
         /// <summary>
@@ -53,20 +49,7 @@ namespace Muscle_Backend.Controllers
         [HttpPost("UpdateBodyParts", Name = "UpdateBodyParts")]
         public void UpdateBodyParts()
         {
-            using (var db = new SystemContext())
-            {
-                // 更新するデータを取得
-                var bodyPart = db.BodyParts.Where(x => x.BodyPartId == 2).FirstOrDefault();
-
-                if (bodyPart != null)
-                {
-                    // 部位を取得できた場合
-                    bodyPart.Name = "腕";
-
-                    // 変更を保存
-                    db.SaveChanges();
-                }
-            }
+            _bodyPartFeature.UpdateRecord(new BodyPart());
         }
 
         /// <summary>
@@ -75,20 +58,7 @@ namespace Muscle_Backend.Controllers
         [HttpPost("DeleteBodyParts", Name = "DeleteBodyParts")]
         public void DeleteBodyParts()
         {
-            using (var db = new SystemContext())
-            {
-                // 更新するデータを取得
-                var bodyPart = db.BodyParts.Where(x => x.BodyPartId == 2 && x.IsDeleted == false).FirstOrDefault();
-
-                if (bodyPart != null)
-                {
-                    // 部位を取得できた場合
-                    bodyPart.IsDeleted = true;
-
-                    // 変更を保存
-                    db.SaveChanges();
-                }
-            }
+            _bodyPartFeature.DeleteRecord(new BodyPart());
         }
     }
 }

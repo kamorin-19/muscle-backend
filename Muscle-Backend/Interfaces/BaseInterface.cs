@@ -1,26 +1,26 @@
 ﻿namespace Muscle_Backend.Interfaces
 {
-    public interface BaseInterface
+    interface BaseInterface<T>
     {
         /// <summary>
         /// データ取得
         /// </summary>
-        public IEnumerable<T> SelectRecords<T>();
+        public IEnumerable<T> SelectRecords(T featureType);
 
         /// <summary>
         /// データ作成
         /// </summary>
-        public void InsertRecord();
+        public void InsertRecord(T featureType);
 
         /// <summary>
         /// データ更新
         /// </summary>
-        public void UpdateRecord();
+        public void UpdateRecord(T featureType);
 
         /// <summary>
         /// データ削除
         /// </summary>
-        public void DeleteRecord();
+        public void DeleteRecord(T featureType);
 
     }
 }
