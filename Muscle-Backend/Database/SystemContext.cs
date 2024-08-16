@@ -11,6 +11,11 @@ namespace Muscle_Backend.Database
         public DbSet<BodyPart> BodyParts { get; set; }
 
         /// <summary>
+        /// 種目テーブル
+        /// </summary>
+        public DbSet<Exercise> Exercises { get; set; }
+
+        /// <summary>
         /// DBの格納パス
         /// </summary>
         public string DbPath { get; }

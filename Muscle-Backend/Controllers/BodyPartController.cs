@@ -8,16 +8,16 @@ namespace Muscle_Backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MuscleManagementController : ControllerBase
+    public class BodyPartController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<MuscleManagementController> _logger;
+        private readonly ILogger<BodyPartController> _logger;
 
-        public MuscleManagementController(ILogger<MuscleManagementController> logger)
+        public BodyPartController(ILogger<BodyPartController> logger)
         {
             _logger = logger;
             _bodyPartFeature = new BodyPartFeature();
