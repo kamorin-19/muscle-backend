@@ -16,9 +16,14 @@ namespace Muscle_Backend.Database
         public DbSet<Exercise> Exercises { get; set; }
 
         /// <summary>
-        /// 種目テーブル
+        /// 日の記録テーブル
         /// </summary>
         public DbSet<DailyRecord> DailyRecords { get; set; }
+
+        /// <summary>
+        /// 日の体重テーブル
+        /// </summary>
+        public DbSet<DailyWeight> DailyWeights { get; set; }
 
         /// <summary>
         /// DBの格納パス
