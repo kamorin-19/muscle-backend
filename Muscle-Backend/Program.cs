@@ -9,6 +9,17 @@ namespace Muscle_Backend
 
             // Add services to the container.
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000") // フロントエンドのオリジンを指定
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -26,6 +37,9 @@ namespace Muscle_Backend
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            // CORSポリシーを適用
+            app.UseCors("AllowSpecificOrigin");
 
 
             app.MapControllers();
