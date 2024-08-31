@@ -18,7 +18,7 @@ namespace Muscle_Backend.Controllers
             _bodyPartFeature = new BodyPartFeature();
         }
 
-        private readonly BaseInterface<BodyPart> _bodyPartFeature;
+        private readonly BaseMasterInterface<BodyPart> _bodyPartFeature;
 
         /// <summary>
         /// •”ˆÊƒ}ƒXƒ^‚ğ“Ç‚İ‚İ

@@ -4,9 +4,13 @@ using Muscle_Backend.Models;
 
 namespace Muscle_Backend.Features
 {
-    public class BodyPartFeature : BaseInterface<BodyPart>
+    public class BodyPartFeature : BaseMasterInterface<BodyPart>
     {
-        public IEnumerable<BodyPart> SelectRecords(BodyPart featureType)
+        /// <summary>
+        /// 部位マスタを読み込み、絞りこみは行わない
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BodyPart> SelectRecords()
         {
             using (var db = new SystemContext())
             {
