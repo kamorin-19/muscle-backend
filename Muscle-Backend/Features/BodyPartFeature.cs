@@ -28,7 +28,7 @@ namespace Muscle_Backend.Features
             {
                 var recordCount = db.BodyParts.Where(x => x.Name == bodyPart.Name).ToList().Count;
 
-                if (recordCount > 1)
+                if (recordCount > 0)
                 {
                     return false;
                 }
@@ -53,7 +53,7 @@ namespace Muscle_Backend.Features
             {
                 var recordCount = db.BodyParts.Where(x => x.Name == bodyPart.Name).ToList().Count;
 
-                if (recordCount > 1)
+                if (recordCount > 0)
                 {
                     return false;
                 }
