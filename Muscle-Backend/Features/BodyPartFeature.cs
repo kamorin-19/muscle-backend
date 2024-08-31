@@ -70,16 +70,17 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void DeleteRecord(BodyPart featureType)
+        public bool DeleteRecord(BodyPart bodyPart)
         {
             using (var db = new SystemContext())
             {
-                var bodyPart = db.BodyParts.FirstOrDefault(x => x.BodyPartId == featureType.BodyPartId);
-                if (bodyPart != null)
+                var deleteBodyPart = db.BodyParts.FirstOrDefault(x => x.BodyPartId == bodyPart.BodyPartId);
+                if (deleteBodyPart != null)
                 {
-                    bodyPart.IsDeleted = true;
+                    deleteBodyPart.IsDeleted = true;
                     db.SaveChanges();
                 }
+                return true;
             }
         }
     }

@@ -51,9 +51,9 @@ namespace Muscle_Backend.Controllers
         /// •”ˆÊƒ}ƒXƒ^‚ğíœ
         /// </summary>
         [HttpPost("DeleteBodyParts", Name = "DeleteBodyParts")]
-        public void DeleteBodyParts()
+        public bool DeleteBodyParts(BodyPart bodyPart)
         {
-            _bodyPartFeature.DeleteRecord(new BodyPart());
+            return _bodyPartFeature.DeleteRecord(bodyPart);
         }
     }
 }

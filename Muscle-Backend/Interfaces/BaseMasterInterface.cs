@@ -20,7 +20,7 @@
         /// <summary>
         /// データ削除
         /// </summary>
-        public void DeleteRecord(T featureType);
+        public bool DeleteRecord(T featureType);
 
     }
 }
