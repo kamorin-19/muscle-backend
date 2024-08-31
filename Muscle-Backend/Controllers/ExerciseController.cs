@@ -10,11 +10,6 @@ namespace Muscle_Backend.Controllers
     [Route("[controller]")]
     public class ExerciseController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<ExerciseController> _logger;
 
         public ExerciseController(ILogger<ExerciseController> logger)
@@ -31,7 +26,7 @@ namespace Muscle_Backend.Controllers
         [HttpGet("GetExercises",Name = "GetExercises")]
         public IEnumerable<Exercise> GetExercises()
         {
-            return _exerciseFeature.SelectRecords(new Exercise());
+            return _exerciseFeature.SelectRecords();
         }
 
         /// <summary>

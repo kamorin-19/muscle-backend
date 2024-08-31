@@ -5,7 +5,7 @@
         /// <summary>
         /// データ取得
         /// </summary>
-        public IEnumerable<T> SelectRecords(T featureType);
+        public IEnumerable<T> SelectRecords();
 
         /// <summary>
         /// データ作成

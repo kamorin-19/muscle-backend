@@ -10,11 +10,6 @@ namespace Muscle_Backend.Controllers
     [Route("[controller]")]
     public class BodyPartController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<BodyPartController> _logger;
 
         public BodyPartController(ILogger<BodyPartController> logger)
@@ -31,7 +26,7 @@ namespace Muscle_Backend.Controllers
         [HttpGet("GetBodyParts",Name = "GetBodyParts")]
         public IEnumerable<BodyPart> GetBodyParts()
         {
-            return _bodyPartFeature.SelectRecords(new BodyPart());
+            return _bodyPartFeature.SelectRecords();
         }
 
         /// <summary>
