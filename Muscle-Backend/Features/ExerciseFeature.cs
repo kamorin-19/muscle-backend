@@ -6,7 +6,7 @@ namespace Muscle_Backend.Features
 {
     public class ExerciseFeature : BaseInterface<Exercise>
     {
-        public IEnumerable<Exercise> SelectRecords(Exercise featureType)
+        public IEnumerable<Exercise> SelectRecords()
         {
             using (var db = new SystemContext())
             {

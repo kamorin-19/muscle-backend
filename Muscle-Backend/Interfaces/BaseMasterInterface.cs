@@ -10,12 +10,12 @@
         /// <summary>
         /// データ作成
         /// </summary>
-        public void InsertRecord(T featureType);
+        public bool InsertRecord(T featureType);
 
         /// <summary>
         /// データ更新
         /// </summary>
-        public void UpdateRecord(T featureType);
+        public bool UpdateRecord(T featureType);
 
         /// <summary>
         /// データ削除

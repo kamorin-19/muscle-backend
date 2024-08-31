@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Muscle_Backend.Models
 {
@@ -7,6 +8,9 @@ namespace Muscle_Backend.Models
         /// <summary>
         /// 部位のID
         /// </summary>
+        [Key]
+        // オートインクリメントを指定
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BodyPartId { get; set; }
 
         /// <summary>

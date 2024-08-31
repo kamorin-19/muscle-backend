@@ -6,7 +6,7 @@ namespace Muscle_Backend.Features
 {
     public class DailyRecordFeature : BaseInterface<DailyRecord>
     {
-        public IEnumerable<DailyRecord> SelectRecords(DailyRecord featureType)
+        public IEnumerable<DailyRecord> SelectRecords()
         {
             using (var db = new SystemContext())
             {

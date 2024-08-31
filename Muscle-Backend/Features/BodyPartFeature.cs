@@ -18,30 +18,55 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void InsertRecord(BodyPart featureType)
+        /// <summary>
+        /// 部位マスタを挿入する
+        /// </summary>
+        /// <returns></returns>
+        public bool InsertRecord(BodyPart bodyPart)
         {
             using (var db = new SystemContext())
             {
-                // 最新のIDを取得(自動インクリメントにしたい
-                var lastBodyPart = db.BodyParts.Where(x => x.IsDeleted == false).OrderBy(x => x.BodyPartId).Last();
-                var maxId = lastBodyPart.BodyPartId + 1;
-                db.Add(new BodyPart { BodyPartId = maxId, Name = "肩" });
+                var recordCount = db.BodyParts.Where(x => x.Name == bodyPart.Name).ToList().Count;
+
+                if (recordCount > 1)
+                {
+                    return false;
+                }
+
+                var newBodyPart = new BodyPart
+                {
+                    Name = bodyPart.Name
+                };
+
+                // データベースに新しいオブジェクトを追加
+                db.BodyParts.Add(newBodyPart);
                 db.SaveChanges();
+
+                return true;
+
             }
         }
 
-        public void UpdateRecord(BodyPart featureType)
+        public bool UpdateRecord(BodyPart bodyPart)
         {
             using (var db = new SystemContext())
             {
+                var recordCount = db.BodyParts.Where(x => x.Name == bodyPart.Name).ToList().Count;
+
+                if (recordCount > 1)
+                {
+                    return false;
+                }
                 // ★名前の重複は不可にする、サービスを追加する？
-                var bodyPart = db.BodyParts.FirstOrDefault(x => x.BodyPartId == featureType.BodyPartId);
-                if (bodyPart != null)
+                var updateBodyPart = db.BodyParts.FirstOrDefault(x => x.BodyPartId == bodyPart.BodyPartId);
+                if (updateBodyPart != null)
                 {
                     // 更新処理
-                    bodyPart.Name = featureType.Name;
+                    updateBodyPart.Name = bodyPart.Name;
                     db.SaveChanges();
+                    
                 }
+                return true;
             }
         }
 

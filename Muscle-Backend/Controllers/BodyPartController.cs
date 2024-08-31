@@ -33,18 +33,18 @@ namespace Muscle_Backend.Controllers
         /// 部位マスタを作成
         /// </summary>
         [HttpPost("AddBodyParts", Name = "AddBodyParts")]
-        public void AddBodyParts()
+        public bool AddBodyParts(BodyPart bodyPart)
         {
-            _bodyPartFeature.InsertRecord(new BodyPart());
+            return _bodyPartFeature.InsertRecord(bodyPart);
         }
 
         /// <summary>
         /// 部位マスタを更新
         /// </summary>
         [HttpPost("UpdateBodyParts", Name = "UpdateBodyParts")]
-        public void UpdateBodyParts()
+        public bool UpdateBodyParts(BodyPart bodyPart)
         {
-            _bodyPartFeature.UpdateRecord(new BodyPart());
+            return _bodyPartFeature.UpdateRecord(bodyPart);
         }
 
         /// <summary>
