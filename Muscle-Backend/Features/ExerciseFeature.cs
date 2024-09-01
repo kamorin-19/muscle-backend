@@ -4,8 +4,12 @@ using Muscle_Backend.Models;
 
 namespace Muscle_Backend.Features
 {
-    public class ExerciseFeature : BaseInterface<Exercise>
+    public class ExerciseFeature : BaseMasterInterface<Exercise>
     {
+        /// <summary>
+        /// 種目マスタを読み込み、絞りこみは行わない
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Exercise> SelectRecords()
         {
             using (var db = new SystemContext())
@@ -14,43 +18,76 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void InsertRecord(Exercise featureType)
+        /// <summary>
+        /// 種目マスタを挿入する
+        /// </summary>
+        /// <returns></returns>
+        public bool InsertRecord(Exercise exercise)
         {
             using (var db = new SystemContext())
             {
-                // 最新のIDを取得(自動インクリメントにしたい
-                var excercise = db.Exercises.OrderBy(x => x.ExercisePId).Last();
-                var maxId = excercise == null ? 0 : excercise.ExercisePId + 1;
-                db.Add(new Exercise { ExercisePId = maxId, Name = "ランジ", Weight = 0.2, BodyPartId = 1 });
+                var recordCount = db.Exercises.Where(x => x.Name == exercise.Name).ToList().Count;
+
+                if (recordCount > 0)
+                {
+                    return false;
+                }
+
+                var newExercises = new Exercise
+                {
+                    Name = exercise.Name
+                };
+
+                // データベースに新しいオブジェクトを追加
+                db.Exercises.Add(newExercises);
                 db.SaveChanges();
+
+                return true;
+
             }
         }
 
-        public void UpdateRecord(Exercise featureType)
+        /// <summary>
+        /// 種目マスタを更新する
+        /// </summary>
+        /// <returns></returns>
+        public bool UpdateRecord(Exercise exercise)
         {
             using (var db = new SystemContext())
             {
-                // ★名前の重複は不可にする、サービスを追加する？
-                var excercise = db.Exercises.FirstOrDefault(x => x.ExercisePId == featureType.ExercisePId);
-                if (excercise != null)
+                var recordCount = db.BodyParts.Where(x => x.Name == exercise.Name).ToList().Count;
+
+                if (recordCount > 0)
+                {
+                    return false;
+                }
+
+                var updateExercise = db.Exercises.FirstOrDefault(x => x.ExercisePId == exercise.ExercisePId);
+                if (updateExercise != null)
                 {
                     // 更新処理
-                    excercise.Name = "ブルガリアンスクワット";
+                    updateExercise.Name = exercise.Name;
                     db.SaveChanges();
+
                 }
+                return true;
             }
         }
 
-        public void DeleteRecord(Exercise featureType)
+        /// <summary>
+        /// 種目マスタを削除する
+        /// </summary>
+        public bool DeleteRecord(Exercise exercise)
         {
             using (var db = new SystemContext())
             {
-                var excercise = db.Exercises.FirstOrDefault(x => x.ExercisePId == featureType.ExercisePId);
-                if (excercise != null)
+                var deleteExercise = db.Exercises.FirstOrDefault(x => x.ExercisePId == exercise.ExercisePId);
+                if (deleteExercise != null)
                 {
-                    excercise.IsDeleted = true;
+                    deleteExercise.IsDeleted = true;
                     db.SaveChanges();
                 }
+                return true;
             }
         }
     }

@@ -10,6 +10,8 @@ namespace Muscle_Backend.Models
         /// 種目のID
         /// </summary>
         [Key]
+        // オートインクリメントを指定
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ExercisePId { get; set; }
 
         /// <summary>

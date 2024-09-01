@@ -18,42 +18,74 @@ namespace Muscle_Backend.Controllers
             _exerciseFeature = new ExerciseFeature();
         }
 
-        private readonly BaseInterface<Exercise> _exerciseFeature;
+        private readonly BaseMasterInterface<Exercise> _exerciseFeature;
 
         /// <summary>
         /// 種目マスタを読み込み
         /// </summary>
         [HttpGet("GetExercises",Name = "GetExercises")]
-        public IEnumerable<Exercise> GetExercises()
+        public ActionResult<IEnumerable<Exercise>> GetExercises()
         {
-            return _exerciseFeature.SelectRecords();
+            try
+            {
+                var exercises = _exerciseFeature.SelectRecords();
+                return Ok(exercises);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの取得に失敗");
+            }
         }
 
         /// <summary>
         /// 種目マスタを作成
         /// </summary>
         [HttpPost("AddExercise", Name = "AddBodyExercise")]
-        public void AddExercise()
+        public ActionResult<bool> AddExercise(Exercise exercise)
         {
-            _exerciseFeature.InsertRecord(new Exercise());
+            try
+            {
+                var processState = _exerciseFeature.InsertRecord(exercise);
+                return Ok(processState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの作成に失敗");
+            }
         }
 
         /// <summary>
         /// 種目マスタを更新
         /// </summary>
         [HttpPost("UpdateExercise", Name = "UpdateExercise")]
-        public void UpdateExercise()
+        public ActionResult<bool> UpdateExercise(Exercise exercise)
         {
-            _exerciseFeature.UpdateRecord(new Exercise());
+            try
+            {
+                var processState = _exerciseFeature.UpdateRecord(exercise);
+                return Ok(processState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの更新に失敗");
+            }
         }
 
         /// <summary>
-        /// 種目マスタを削除
+        /// 種目マスタを削除する
         /// </summary>
         [HttpPost("DeleteExercise", Name = "DeleteExercise")]
-        public void DeleteExercise()
+        public ActionResult<bool> DeleteExercise(Exercise exercise)
         {
-            _exerciseFeature.DeleteRecord(new Exercise());
+            try
+            {
+                var processState = _exerciseFeature.DeleteRecord(exercise);
+                return Ok(processState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの削除に失敗");
+            }
         }
     }
 }
