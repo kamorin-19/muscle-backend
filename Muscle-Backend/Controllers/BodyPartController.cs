@@ -24,36 +24,68 @@ namespace Muscle_Backend.Controllers
         /// 部位マスタを読み込み
         /// </summary>
         [HttpGet("GetBodyParts",Name = "GetBodyParts")]
-        public IEnumerable<BodyPart> GetBodyParts()
+        public ActionResult<IEnumerable<BodyPart>> GetBodyParts()
         {
-            return _bodyPartFeature.SelectRecords();
+            try
+            {
+                var bodyParts = _bodyPartFeature.SelectRecords();
+                return Ok(bodyParts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの取得に失敗");
+            }
         }
 
         /// <summary>
         /// 部位マスタを作成
         /// </summary>
         [HttpPost("AddBodyParts", Name = "AddBodyParts")]
-        public bool AddBodyParts(BodyPart bodyPart)
+        public ActionResult<bool> AddBodyParts(BodyPart bodyPart)
         {
-            return _bodyPartFeature.InsertRecord(bodyPart);
+            try
+            {
+                var processState = _bodyPartFeature.InsertRecord(bodyPart); 
+                return Ok(processState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの作成に失敗");
+            }
         }
 
         /// <summary>
         /// 部位マスタを更新
         /// </summary>
         [HttpPost("UpdateBodyParts", Name = "UpdateBodyParts")]
-        public bool UpdateBodyParts(BodyPart bodyPart)
+        public ActionResult<bool> UpdateBodyParts(BodyPart bodyPart)
         {
-            return _bodyPartFeature.UpdateRecord(bodyPart);
+            try
+            {
+                var processState = _bodyPartFeature.UpdateRecord(bodyPart);
+                return Ok(processState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの更新に失敗");
+            }
         }
 
         /// <summary>
         /// 部位マスタを削除
         /// </summary>
         [HttpPost("DeleteBodyParts", Name = "DeleteBodyParts")]
-        public bool DeleteBodyParts(BodyPart bodyPart)
+        public ActionResult<bool> DeleteBodyParts(BodyPart bodyPart)
         {
-            return _bodyPartFeature.DeleteRecord(bodyPart);
+            try
+            {
+                var processState = _bodyPartFeature.DeleteRecord(bodyPart);
+                return Ok(processState);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの削除に失敗");
+            }
         }
     }
 }
