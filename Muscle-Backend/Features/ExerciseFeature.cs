@@ -71,6 +71,8 @@ namespace Muscle_Backend.Features
                 {
                     // 更新処理
                     updateExercise.Name = exercise.Name;
+                    updateExercise.Weight = exercise.Weight;
+                    updateExercise.BodyPartId = exercise.BodyPart.BodyPartId;
                     db.SaveChanges();
 
                 }
