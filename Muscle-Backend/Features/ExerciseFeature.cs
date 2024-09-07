@@ -39,7 +39,9 @@ namespace Muscle_Backend.Features
 
                 var newExercises = new Exercise
                 {
-                    Name = exercise.Name
+                    Name = exercise.Name,
+                    Weight = exercise.Weight,
+                    BodyPartId = exercise.BodyPart.BodyPartId,
                 };
 
                 // データベースに新しいオブジェクトを追加
