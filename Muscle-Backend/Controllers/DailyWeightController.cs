@@ -33,9 +33,9 @@ namespace Muscle_Backend.Controllers
         /// “ú‚Ì‘Ìd‚ğì¬
         /// </summary>
         [HttpPost("AddDailyWeight", Name = "AddDailyWeight")]
-        public void AddDailyWeight()
+        public void AddDailyWeight(DailyWeight dailyWeight)
         {
-            _dailyWeightFeature.InsertRecord(new DailyWeight());
+            _dailyWeightFeature.InsertRecord(dailyWeight);
         }
 
         /// <summary>

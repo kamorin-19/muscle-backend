@@ -14,8 +14,30 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void InsertRecord(DailyWeight featureType)
+        public void InsertRecord(DailyWeight dailyWeight)
         {
+            using (var db = new SystemContext())
+            {
+                var recordCount = db.DailyWeights.Where(x => x.RecordedDay == dailyWeight.RecordedDay).ToList().Count;
+
+                if (recordCount > 0)
+                {
+                    return;
+                }
+
+                var newDailyWeight = new DailyWeight
+                {
+                    RecordedDay = dailyWeight.RecordedDay,
+                    Weight = dailyWeight.Weight,
+                };
+
+                // データベースに新しいオブジェクトを追加
+                db.DailyWeights.Add(newDailyWeight);
+                db.SaveChanges();
+
+                return;
+
+            }
             using (var db = new SystemContext())
             {
                 // 最新のIDを取得(自動インクリメントにしたい

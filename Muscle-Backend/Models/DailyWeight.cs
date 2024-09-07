@@ -8,6 +8,9 @@ namespace Muscle_Backend.Models
         /// <summary>
         /// 日の記録のID
         /// </summary>
+        [Key]
+        // オートインクリメントを指定
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DailyWeightId { get; set; }
 
         /// <summary>
