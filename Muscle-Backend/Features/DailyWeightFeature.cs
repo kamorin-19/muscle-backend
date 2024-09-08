@@ -56,14 +56,14 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void DeleteRecord(DailyWeight featureType)
+        public void DeleteRecord(DailyWeight dailyWeight)
         {
             using (var db = new SystemContext())
             {
-                var dailyweight = db.DailyWeights.FirstOrDefault(x => x.DailyWeightId == featureType.DailyWeightId);
-                if (dailyweight != null)
+                var deletedDailyWeight = db.DailyWeights.FirstOrDefault(x => x.DailyWeightId == dailyWeight.DailyWeightId);
+                if (deletedDailyWeight != null)
                 {
-                    dailyweight.IsDeleted = true;
+                    deletedDailyWeight.IsDeleted = true;
                     db.SaveChanges();
                 }
             }
