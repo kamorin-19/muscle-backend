@@ -38,29 +38,19 @@ namespace Muscle_Backend.Features
                 return;
 
             }
-            using (var db = new SystemContext())
-            {
-                // 最新のIDを取得(自動インクリメントにしたい
-                var dailyweight = db.DailyWeights.OrderBy(x => x.DailyWeightId).Last();
-                var maxId = dailyweight == null ? 0 : dailyweight.DailyWeightId + 1;
-                db.Add(new DailyWeight { DailyWeightId = maxId,
-                                         RecordedDay = new DateOnly(2024, 8, 24),
-                                         Weight = 1.0
-                                       });
-                db.SaveChanges();
-            }
         }
 
-        public void UpdateRecord(DailyWeight featureType)
+        public void UpdateRecord(DailyWeight dailyWeight)
         {
             using (var db = new SystemContext())
             {
                 // ★名前の重複は不可にする、サービスを追加する？
-                var dailyweight = db.DailyWeights.FirstOrDefault(x => x.DailyWeightId == featureType.DailyWeightId);
-                if (dailyweight != null)
+                var updatedDailyweight = db.DailyWeights.FirstOrDefault(x => x.DailyWeightId == dailyWeight.DailyWeightId);
+                if (updatedDailyweight != null)
                 {
                     // 更新処理
-                    dailyweight.Weight = 10.0;
+                    updatedDailyweight.Weight = dailyWeight.Weight;
+                    updatedDailyweight.RecordedDay = dailyWeight.RecordedDay;
                     db.SaveChanges();
                 }
             }

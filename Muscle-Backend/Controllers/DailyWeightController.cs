@@ -42,18 +42,18 @@ namespace Muscle_Backend.Controllers
         /// 日の体重を更新
         /// </summary>
         [HttpPost("UpdateDailyWeight", Name = "UpdateDailyWeight")]
-        public void UpdateDailyWeight()
+        public void UpdateDailyWeight(DailyWeight dailyWeight)
         {
-            _dailyWeightFeature.UpdateRecord(new DailyWeight());
+            _dailyWeightFeature.UpdateRecord(dailyWeight);
         }
 
         /// <summary>
         /// 日の体重を削除
         /// </summary>
         [HttpPost("DeleteDailyWeight", Name = "DeleteDailyWeight")]
-        public void DeleteDailyWeight()
+        public void DeleteDailyWeight(DailyWeight dailyWeight)
         {
-            _dailyWeightFeature.DeleteRecord(new DailyWeight());
+            _dailyWeightFeature.DeleteRecord(dailyWeight);
         }
     }
 }
