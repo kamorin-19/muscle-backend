@@ -13,6 +13,7 @@ namespace Muscle_Backend.Features
             {
 
                 return db.DailyRecords.Include(x => x.Exercise)
+                   .ThenInclude(y => y.BodyPart)
                    .Where(x => x.IsDeleted == false)
                    .ToList();
             }
@@ -41,17 +42,21 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void UpdateRecord(DailyRecord featureType)
+        public void UpdateRecord(DailyRecord dailyRecord)
         {
             using (var db = new SystemContext())
             {
-                // ★名前の重複は不可にする、サービスを追加する？
-                var dailyRecord = db.DailyRecords.FirstOrDefault(x => x.DailyRecordId == featureType.DailyRecordId);
-                if (dailyRecord != null)
+                var updateDailyRecord = db.DailyRecords.FirstOrDefault(x => x.DailyRecordId == dailyRecord.DailyRecordId);
+                if (updateDailyRecord != null)
                 {
                     // 更新処理
-                    dailyRecord.FifthSetCount = 10;
+                    updateDailyRecord.EnforcementDay = dailyRecord.EnforcementDay;
+                    updateDailyRecord.ExercisePId = dailyRecord.ExercisePId;
+                    updateDailyRecord.FirstSetCount = dailyRecord.FirstSetCount;
+                    updateDailyRecord.SecondSetCount = dailyRecord.SecondSetCount;
+                    updateDailyRecord.ThirdSetCount = dailyRecord.ThirdSetCount;
                     db.SaveChanges();
+
                 }
             }
         }

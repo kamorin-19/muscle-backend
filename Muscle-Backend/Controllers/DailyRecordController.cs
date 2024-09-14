@@ -52,9 +52,9 @@ namespace Muscle_Backend.Controllers
         /// “ú‚Ì‹L˜^‚ğXV
         /// </summary>
         [HttpPost("UpdateDailyRecord", Name = "UpdateDailyRecord")]
-        public void UpdateDailyRecord()
+        public void UpdateDailyRecord(DailyRecord dailyRecord)
         {
-            _dailyRecordFeature.UpdateRecord(new DailyRecord());
+            _dailyRecordFeature.UpdateRecord(dailyRecord);
         }
 
         /// <summary>
