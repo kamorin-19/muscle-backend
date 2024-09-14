@@ -25,9 +25,17 @@ namespace Muscle_Backend.Controllers
         /// 日の記録をを読み込み
         /// </summary>
         [HttpGet("GetDailyRecord",Name = "GetDailyRecord")]
-        public IEnumerable<DailyRecord> GetExercises()
+        public ActionResult<IEnumerable<DailyRecord>> GetExercises()
         {
-            return _dailyRecordFeature.SelectRecords();
+            try
+            {
+                var dailyRecords = _dailyRecordFeature.SelectRecords();
+                return Ok(dailyRecords);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "データの取得に失敗");
+            }
         }
 
         /// <summary>
@@ -36,6 +44,7 @@ namespace Muscle_Backend.Controllers
         [HttpPost("AddDailyRecord", Name = "AddDailyRecord")]
         public void AddDailyRecord(DailyRecord dailyRecord)
         {
+
             _dailyRecordFeature.InsertRecord(dailyRecord);
         }
 

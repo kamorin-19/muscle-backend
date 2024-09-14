@@ -1,4 +1,5 @@
-﻿using Muscle_Backend.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using Muscle_Backend.Database;
 using Muscle_Backend.Interfaces;
 using Muscle_Backend.Models;
 
@@ -10,7 +11,10 @@ namespace Muscle_Backend.Features
         {
             using (var db = new SystemContext())
             {
-                return db.DailyRecords.Where(x => x.IsDeleted == false).ToList();
+
+                return db.DailyRecords.Include(x => x.Exercise)
+                   .Where(x => x.IsDeleted == false)
+                   .ToList();
             }
         }
 
