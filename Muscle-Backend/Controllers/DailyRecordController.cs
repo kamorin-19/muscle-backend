@@ -61,9 +61,9 @@ namespace Muscle_Backend.Controllers
         /// “ú‚Ì‹L˜^‚ğíœ
         /// </summary>
         [HttpPost("DeleteDailyRecord", Name = "DeleteDailyRecord")]
-        public void DeleteDailyRecord()
+        public void DeleteDailyRecord(DailyRecord dailyRecord)
         {
-            _dailyRecordFeature.DeleteRecord(new DailyRecord());
+            _dailyRecordFeature.DeleteRecord(dailyRecord);
         }
     }
 }

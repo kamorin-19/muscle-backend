@@ -61,14 +61,14 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void DeleteRecord(DailyRecord featureType)
+        public void DeleteRecord(DailyRecord dailyRecord)
         {
             using (var db = new SystemContext())
             {
-                var dailyRecord = db.DailyRecords.FirstOrDefault(x => x.DailyRecordId == featureType.DailyRecordId);
-                if (dailyRecord != null)
+                var deletedDailyRecord = db.DailyRecords.FirstOrDefault(x => x.DailyRecordId == dailyRecord.DailyRecordId);
+                if (deletedDailyRecord != null)
                 {
-                    dailyRecord.IsDeleted = true;
+                    deletedDailyRecord.IsDeleted = true;
                     db.SaveChanges();
                 }
             }
