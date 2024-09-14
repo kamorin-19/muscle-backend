@@ -14,23 +14,26 @@ namespace Muscle_Backend.Features
             }
         }
 
-        public void InsertRecord(DailyRecord featureType)
+        public void InsertRecord(DailyRecord dailyRecord)
         {
             using (var db = new SystemContext())
             {
-                // 最新のIDを取得(自動インクリメントにしたい
-                var dailyRecord = db.DailyRecords.OrderBy(x => x.ExercisePId).Last();
-                var maxId = dailyRecord == null ? 0 : dailyRecord.DailyRecordId + 1;
-                db.Add(new DailyRecord { DailyRecordId = maxId,
-                                         EnforcementDay = new DateOnly(2024, 8, 24),
-                                         ExercisePId = 1,
-                                         FirstSetCount = 0,
-                                         SecondSetCount = 0,
-                                         ThirdSetCount = 0,
-                                         FourthSetCount = 0,
-                                         FifthSetCount = 0
-                                       });
+                var newDailyRecord = new DailyRecord
+                {
+                    EnforcementDay = dailyRecord.EnforcementDay,
+                    ExercisePId = dailyRecord.Exercise.ExercisePId,
+                    FirstSetCount = dailyRecord.FirstSetCount,
+                    SecondSetCount = dailyRecord.SecondSetCount,
+                    ThirdSetCount = dailyRecord.ThirdSetCount,
+                    FourthSetCount = 0,
+                    FifthSetCount = 0
+                };
+
+                // データベースに新しいオブジェクトを追加
+                db.DailyRecords.Add(newDailyRecord);
                 db.SaveChanges();
+
+                return;
             }
         }
 

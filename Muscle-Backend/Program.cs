@@ -20,6 +20,13 @@ namespace Muscle_Backend
                     });
             });
 
+            // JSONのプロパティ名をキャメルケースに変換しない設定を追加
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null; // キャメルケースを無効化
+                });
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
