@@ -27,5 +27,27 @@ namespace Muscle_Backend.Services
 
             }
         }
+
+        /// <summary>
+        /// 種目マスタの重複チェックを行う
+        /// </summary>
+        /// <param name="exercise"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static bool ValidateExercisesDuplicates(Exercise exercise)
+        {
+            using (var db = new SystemContext())
+            {
+                var recordCount = db.Exercises.Where(x => x.Name == exercise.Name).ToList().Count;
+
+                if (recordCount > 0)
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+        }
     }
 }

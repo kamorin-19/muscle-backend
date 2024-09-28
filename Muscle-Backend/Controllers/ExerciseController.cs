@@ -29,6 +29,7 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var exercises = _exerciseFeature.SelectRecords();
+
                 return Ok(exercises);
             }
             catch (Exception ex)
@@ -46,6 +47,12 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var processState = _exerciseFeature.InsertRecord(exercise);
+
+                if (!processState)
+                {
+                    throw new Exception();
+                }
+
                 return Ok(processState);
             }
             catch (Exception ex)
@@ -63,6 +70,12 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var processState = _exerciseFeature.UpdateRecord(exercise);
+
+                if (!processState)
+                {
+                    throw new Exception();
+                }
+
                 return Ok(processState);
             }
             catch (Exception ex)
@@ -80,6 +93,12 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var processState = _exerciseFeature.DeleteRecord(exercise);
+
+                if (!processState)
+                {
+                    throw new Exception();
+                }
+
                 return Ok(processState);
             }
             catch (Exception ex)

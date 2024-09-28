@@ -92,6 +92,12 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var processState = _bodyPartFeature.DeleteRecord(bodyPart);
+
+                if (!processState)
+                {
+                    throw new Exception();
+                }
+
                 return Ok(processState);
             }
             catch (Exception ex)

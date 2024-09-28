@@ -2,6 +2,7 @@
 using Muscle_Backend.Database;
 using Muscle_Backend.Interfaces;
 using Muscle_Backend.Models;
+using Muscle_Backend.Services;
 
 namespace Muscle_Backend.Features
 {
@@ -30,11 +31,12 @@ namespace Muscle_Backend.Features
         {
             using (var db = new SystemContext())
             {
-                var recordCount = db.Exercises.Where(x => x.Name == exercise.Name).ToList().Count;
+                // 重複チェック
+                var duplicateCheck = DomainService.ValidateExercisesDuplicates(exercise);
 
-                if (recordCount > 0)
+                if (!duplicateCheck)
                 {
-                    return false;
+                    return duplicateCheck;
                 }
 
                 var newExercises = new Exercise
@@ -61,11 +63,12 @@ namespace Muscle_Backend.Features
         {
             using (var db = new SystemContext())
             {
-                var recordCount = db.BodyParts.Where(x => x.Name == exercise.Name).ToList().Count;
+                // 重複チェック
+                var duplicateCheck = DomainService.ValidateExercisesDuplicates(exercise);
 
-                if (recordCount > 0)
+                if (!duplicateCheck)
                 {
-                    return false;
+                    return duplicateCheck;
                 }
 
                 var updateExercise = db.Exercises.FirstOrDefault(x => x.ExercisePId == exercise.ExercisePId);
