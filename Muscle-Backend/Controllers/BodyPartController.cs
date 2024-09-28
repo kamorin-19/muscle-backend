@@ -46,6 +46,12 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var processState = _bodyPartFeature.InsertRecord(bodyPart); 
+
+                if (!processState)
+                {
+                    throw new Exception();
+                }
+
                 return Ok(processState);
             }
             catch (Exception ex)
@@ -63,6 +69,12 @@ namespace Muscle_Backend.Controllers
             try
             {
                 var processState = _bodyPartFeature.UpdateRecord(bodyPart);
+
+                if (!processState)
+                {
+                    throw new Exception();
+                }
+
                 return Ok(processState);
             }
             catch (Exception ex)

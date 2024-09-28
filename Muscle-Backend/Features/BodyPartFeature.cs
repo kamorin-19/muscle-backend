@@ -1,6 +1,7 @@
 ﻿using Muscle_Backend.Database;
 using Muscle_Backend.Interfaces;
 using Muscle_Backend.Models;
+using Muscle_Backend.Services;
 
 namespace Muscle_Backend.Features
 {
@@ -26,11 +27,12 @@ namespace Muscle_Backend.Features
         {
             using (var db = new SystemContext())
             {
-                var recordCount = db.BodyParts.Where(x => x.Name == bodyPart.Name).ToList().Count;
+                // 重複チェック
+                var duplicateCheck = DomainService.ValidateBodyPartDuplicates(bodyPart);
 
-                if (recordCount > 0)
+                if (!duplicateCheck)
                 {
-                    return false;
+                    return duplicateCheck;
                 }
 
                 var newBodyPart = new BodyPart
@@ -51,13 +53,14 @@ namespace Muscle_Backend.Features
         {
             using (var db = new SystemContext())
             {
-                var recordCount = db.BodyParts.Where(x => x.Name == bodyPart.Name).ToList().Count;
+                // 重複チェック
+                var duplicateCheck = DomainService.ValidateBodyPartDuplicates(bodyPart);
 
-                if (recordCount > 0)
+                if (!duplicateCheck)
                 {
-                    return false;
+                    return duplicateCheck;
                 }
-                // ★名前の重複は不可にする、サービスを追加する？
+
                 var updateBodyPart = db.BodyParts.FirstOrDefault(x => x.BodyPartId == bodyPart.BodyPartId);
                 if (updateBodyPart != null)
                 {
